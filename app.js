@@ -3,20 +3,26 @@ const express = require('express');
 const handlebars = require('express-handlebars');
 const bodyParser = require ('body-parser');
 const app = express();
+const admin = require("./routes/admin")
 //const mongoose = require("mongoose")
 
 //Configurações
 // BODY PARSER
 app.use(bodyParser.urlencoded({extended: true}))
-app.use(bodyParser.json)
+app.use(bodyParser.json())
 //HANDLEBARS
 app.engine('handlebars', handlebars({defaultLayout: 'main'}))
 app.set('view engine', 'handlebars');
-//
-
-
-
+// 
 //Rotas
+app.get('/', (req, res) =>{
+    res.send("Rota Principal")
+})
+app.get('/valmyr', (req, res)=>{
+    res.send("Fala Valmyr, agora vc vai aprender node")
+})
+
+app.use('/admin', admin)
 
 //Outros
 const PORT = 8081
