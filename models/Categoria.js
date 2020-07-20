@@ -10,7 +10,7 @@ const Categoria = new Schema({
         type:String,
         required:true
     },
-    nome:{
+    date:{
         type:Date,
        default: Date.now()
     }
