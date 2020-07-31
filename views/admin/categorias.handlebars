@@ -8,9 +8,13 @@
             <h4>{{this.nome}}</h4>
             <small>{{this.slug}}</small><br>
             <a href="categorias/edit/{{_id}}"><button class="btn btn-success mt-4">Editar Categoria</button></a> 
+            <form action="/admin/categorias/deletar" method="POST">
+                <input type="hidden" name="id" value="{{_id}}">
+                <button type="submit" class="btn btn-danger mt-2">Deletar Categoria</button>
+            </form>
         </div>
     </div>
 
 {{else}}
-
+    <h4 class="mt-3">Nenhuma categoria registrada...</h4>
 {{/each}}
