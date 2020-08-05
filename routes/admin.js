@@ -52,9 +52,7 @@ router.post("/categorias/nova",(req, res)=>{
             req.flash("error_msg", "Houve um erro ao salvar a categoria tente novamente")
             res.redirect("/admin")
         })
-
     }
-
    
 })
 router.get("/categorias/edit/:id",(req, res)=>{
@@ -99,14 +97,20 @@ router.post("/categorias/deletar", (req, res) =>{
 })
 
 router.get("/postagens", (req, res)=> {
-    res.render("admin/postagens")
+
+    Postagem.find().populate("categoria").sort({data: "desc"}).then((postagens)=> {
+        res.render("admin/postagens", {postagens: postagens.map(postagens => postagens.toJSON())})
+    }).catch((err)=> {
+        req.flash("error_msg", "Houve um erro a listar as postagens")
+        res.redirect("/admin")
+    })    
 })
 
 router.get("/postagens/add",(req, res)=> {
     Categoria.find().lean().then((categorias) => {
         res.render("admin/addpostagem", {categorias: categorias})
     }). catch((err)=> {
-        req.flash("error_msg", "Houve um erro ao carrgar o formulario")
+        req.flash("error_msg", "Houve um erro ao carregar o formulario")
         res.redirect("/admin")
     })
 } )
@@ -115,7 +119,7 @@ router.post("/postagens/nova", (req, res) => {
     var erros = []
 
     if(req.body.categoria == "0"){
-        erros.push({text: "Categoria incalida, registre uma categoria"})
+        erros.push({texto: "Categoria incalida, registre uma categoria"})
     }
 
     if(erros.length > 0){
@@ -143,3 +147,5 @@ router.post("/postagens/nova", (req, res) => {
 
 
 module.exports = router
+
+//Codigo que pode salvar a sua vida  https://github.com/LumusCode/blog
