@@ -15,7 +15,7 @@ const Categoria = mongoose.model("categorias")
 const usuarios= require("./routes/usuario")
 
 const passport = require('passport');
-require('./config/auth');
+require('./config/auth')(passport)
 
 //Configurações
 //Sessção

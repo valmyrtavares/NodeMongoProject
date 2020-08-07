@@ -1,4 +1,4 @@
-const localStrategy = require("passport-local")
+const localStrategy = require("passport-local").Strategy
 const mongoose = require("mongoose")
 const bcrypt = require("bcryptjs")
 
@@ -7,11 +7,11 @@ const bcrypt = require("bcryptjs")
 require("../models/Usuario")
 const Usuario = mongoose.model("usuarios")
 
-module.export = function(passport){
+module.exports = function(passport){
 
-    passport.use(new localStategy({usernameField: 'email', passwordField: 'senha'},(email, senha, done)=>{
+    passport.use(new localStrategy({usernameField: 'email', passwordField: 'senha'},(email, senha, done)=>{
         Usuario.findOne({email: email}).then((usuario)=> {
-            if(!usario){
+            if(!usuario){
                 return done(null, false, {message: "Esta conta não existe"})
             }
 
@@ -32,7 +32,7 @@ module.export = function(passport){
     })
 
     passport.deserializeUser((id, done) => {
-        Usuario.findById(_id, (err, usuario)=> {
+        Usuario.findById(id, (err, usuario)=> {
             done(err, usuario)
         })
     })
